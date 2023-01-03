@@ -1,0 +1,36 @@
+{
+  "name": "@leofcoin/multi-wif",
+  "version": "1.0.0",
+  "description": "<version><codec><key>",
+  "type": "module",
+  "exports": {
+    ".": "./index.js"
+  },
+  "types": "./index.d.ts",
+  "scripts": {
+    "build": "rollup -c",
+    "watch": "rollup -c -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/leofcoin/multi-wif.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/leofcoin/multi-wif/issues"
+  },
+  "homepage": "https://github.com/leofcoin/multi-wif#readme",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^10.0.1",
+    "rollup": "^3.9.1",
+    "tslib": "^2.4.1"
+  },
+  "dependencies": {
+    "@vandeurenglenn/base58check": "^1.1.1",
+    "@vandeurenglenn/typed-array-smart-concat": "^1.0.2",
+    "@vandeurenglenn/typed-array-smart-deconcat": "^1.0.1"
+  }
+}
