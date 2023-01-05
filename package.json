@@ -29,7 +29,7 @@
     "tslib": "^2.4.1"
   },
   "dependencies": {
-    "@vandeurenglenn/base58check": "^1.1.1",
+    "@vandeurenglenn/base58": "^1.1.8",
     "@vandeurenglenn/typed-array-smart-concat": "^1.0.2",
     "@vandeurenglenn/typed-array-smart-deconcat": "^1.0.1"
   }

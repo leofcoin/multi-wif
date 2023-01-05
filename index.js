@@ -1,10 +1,10 @@
-import base58check from '@vandeurenglenn/base58check';
+import base58 from '@vandeurenglenn/base58';
 import typedArraySmartConcat from '@vandeurenglenn/typed-array-smart-concat';
 import typedArraySmartDeconcat from '@vandeurenglenn/typed-array-smart-deconcat';
 
-const decode = async (multiWif, expectedVersion, expectedCodec) => {
-    const { data } = await base58check.decode(multiWif);
-    let [version, codec, privateKey] = typedArraySmartDeconcat(data);
+const decode = (multiWif, expectedVersion, expectedCodec) => {
+    const decoded = base58.decode(multiWif);
+    let [version, codec, privateKey] = typedArraySmartDeconcat(decoded);
     version = Number(new TextDecoder().decode(version));
     codec = Number(new TextDecoder().decode(codec));
     if (expectedVersion && version !== expectedVersion)
@@ -15,16 +15,16 @@ const decode = async (multiWif, expectedVersion, expectedCodec) => {
 };
 var index = {
     encode: (version, codec, privateKey) => {
-        return base58check.encode(typedArraySmartConcat([
+        return base58.encode(typedArraySmartConcat([
             new TextEncoder().encode(version.toString()),
             new TextEncoder().encode(codec.toString()),
             privateKey
         ]));
     },
     decode,
-    isMultiWif: async (multiWif) => {
+    isMultiWif: (multiWif) => {
         try {
-            const { version, codec, privateKey } = await decode(multiWif);
+            const { version, codec, privateKey } = decode(multiWif);
             if (version === undefined)
                 return false;
             if (codec === undefined)

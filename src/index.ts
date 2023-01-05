@@ -1,4 +1,4 @@
-import base58check from '@vandeurenglenn/base58check'
+import base58 from '@vandeurenglenn/base58'
 import typedArraySmartConcat from '@vandeurenglenn/typed-array-smart-concat'
 import typedArraySmartDeconcat  from '@vandeurenglenn/typed-array-smart-deconcat'
 
@@ -16,9 +16,10 @@ type decodedMultiWif = {
   privateKey: Uint8Array
 }
 
-const decode = async (multiWif: encodedMultiwif, expectedVersion?: number, expectedCodec?: number): Promise<decodedMultiWif> => {
-  const { data } = await base58check.decode(multiWif)
-  let [version, codec, privateKey] = typedArraySmartDeconcat(data)
+const decode = (multiWif: encodedMultiwif, expectedVersion?: number, expectedCodec?: number): decodedMultiWif => {
+  const decoded = base58.decode(multiWif)
+  
+  let [version, codec, privateKey] = typedArraySmartDeconcat(decoded)
   version = Number(new TextDecoder().decode(version))
   codec = Number(new TextDecoder().decode(codec))
 
@@ -28,17 +29,17 @@ const decode = async (multiWif: encodedMultiwif, expectedVersion?: number, expec
 }
 
 export default {
-  encode: (version: number, codec: number, privateKey: Uint8Array): Promise<encodedMultiwif> => {    
-    return base58check.encode(typedArraySmartConcat([
+  encode: (version: number, codec: number, privateKey: Uint8Array): encodedMultiwif => {
+    return base58.encode(typedArraySmartConcat([
 			new TextEncoder().encode(version.toString()),
 			new TextEncoder().encode(codec.toString()),
 			privateKey
 		]));    
   },
   decode,
-  isMultiWif: async (multiWif: encodedMultiwif) => {
+  isMultiWif: (multiWif: encodedMultiwif) => {
     try {
-      const { version, codec, privateKey } = await decode(multiWif)
+      const { version, codec, privateKey } = decode(multiWif)
       if (version === undefined) return false
       if (codec === undefined) return false
       if (privateKey === undefined) return false
